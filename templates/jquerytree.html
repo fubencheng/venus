@@ -1,0 +1,62 @@
+{% extends 'common.html' %}
+
+{% block header %}
+{% include 'header.html' %}
+<!-- JSTree 样式 -->
+<link href="{{ static_url('jstree/css/style.min.css') }}" rel="stylesheet">
+{% end %}
+
+{% block body %}
+<div id="jstree">
+
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $('#jstree').jstree({
+            'core': {
+                "animation": 0,
+                "check_callback": true,
+                "themes": {"stripes": true},
+                'data': [
+                    {
+                        'text': 'Root node 2',
+                        'children': [
+                            {'text': 'Child 1'},
+                            'Child 2'
+                        ]
+                    }
+                ],
+            },
+            "types": {
+                "#": {
+                    "max_children": 1,
+                    "max_depth": 4,
+                    "valid_children": ["root"]
+                },
+                "root": {
+                    "valid_children": ["default"]
+                },
+                "default": {
+                    "valid_children": ["default", "file"]
+                },
+                "file": {
+                    "icon": "glyphicon glyphicon-file",
+                    "valid_children": []
+                }
+            },
+            "plugins": [
+                "contextmenu", "dnd", "search",
+                "state", "types", "wholerow"
+            ]
+        });
+    });
+</script>
+{% end %}
+
+{% block footer %}
+{% end %}
+
+{% block scripts %}
+<script src="{{ static_url('jstree/js/jstree.min.js') }}"></script>
+{% end %}
