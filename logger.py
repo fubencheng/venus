@@ -3,7 +3,7 @@
 
 """
 ------------------------------------------------------
- @file: config.py
+ @file: logger.py
  @description:
  @author: fubencheng
  @create: 2018-04-28 21:04
@@ -13,15 +13,17 @@
 import logging
 logging.basicConfig()
 
+from config import Config
 from logging.handlers import RotatingFileHandler
 import os
 
-def log_setting(name="", level=logging.DEBUG, stdout_switch=True):
+config = Config().get_config()
+log_dir = config.get("log_dir").get(config.get("env"))
+
+def get_logger(name="", level=logging.INFO, stdout_switch=True):
     logger = logging.getLogger(name)
     logger.setLevel(level)
     if not len(logger.handlers):
-        log_path = os.path.normpath(os.path.join(os.path.abspath(os.path.dirname(__file__)), "."))
-        log_dir = os.path.join(log_path, "logs")
         if not os.path.isdir(log_dir):
                 os.mkdir(log_dir)
 
@@ -46,5 +48,3 @@ def log_setting(name="", level=logging.DEBUG, stdout_switch=True):
         if stdout_switch:
             logger.addHandler(console_handler)
     return logger
-
-log = log_setting(name="charts", level=logging.INFO)

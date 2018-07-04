@@ -11,7 +11,7 @@
 """
 
 from tornado.web import RequestHandler
-from logger import log
+import logger
 
 # treeData = {"name": "http:/getuserinfo","children": [{"name": "http:/findnameandcountrybyid","children": [{"name": "http:/findgenderbyid","children": [{"name": "http:/querynamebyuserid","size": 3938}]}]}]}
 
@@ -41,7 +41,7 @@ class D3TreeDataHandler(RequestHandler):
         pass
 
     def get(self, *args, **kwargs):
-        log.info(self.get_tree_data())
+        logger.get_logger('d3tree').info(self.get_tree_data())
         tree_data_obj = self.get_tree_data()
         display = self.get_argument("display")
         if int(display) == 1:
@@ -53,7 +53,7 @@ class D3TreeDataHandler(RequestHandler):
         tree_data = []
         for item in source:
             if item["parentId"] == _id:
-                tree_data.append({"id":item["id"], "name":item["name"], "children": self.get_tree_data(item["id"])})
+                tree_data.append({"id": item["id"], "name": item["name"], "children": self.get_tree_data(item["id"])})
         return tree_data
 
 if __name__ == '__main__':

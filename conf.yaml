@@ -1,0 +1,8 @@
+env: test
+#env: uat
+#env: prd
+
+log_dir:
+  test: /alidata1/admin/logs
+  uat: /alidata1/admin/logs
+  prd: /alidata1/admin/logs
